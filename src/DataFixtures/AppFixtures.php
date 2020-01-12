@@ -19,7 +19,8 @@ class AppFixtures extends Fixture
      */
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder){
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
         $this->encoder = $encoder;
     }
 
@@ -41,30 +42,29 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
 
-            for ($c = 0; $c <= mt_rand(5, 20); $c++){
+            for ($c = 0; $c <= mt_rand(5, 20); $c++) {
                 $customer = new Customer();
                 $customer->setFirstName($faker->firstName())
-                        ->setLastName($faker->lastName)
-                        ->setCompany($faker->company)
-                        ->setEmail($faker->email)
-                        ->setUser($user);
-                        
+                    ->setLastName($faker->lastName)
+                    ->setCompany($faker->company)
+                    ->setEmail($faker->email)
+                    ->setUser($user);
+
                 $manager->persist($customer);
 
-                for ($i=0; $i < mt_rand(0, 10); $i++) {
+                for ($i = 0; $i < mt_rand(0, 10); $i++) {
                     $invoice = new Invoice();
                     $invoice->setAmount($faker->randomFloat(2, 250, 5000))
-                            ->setSentAt($faker->dateTimeBetween('-6 months'))
-                            ->setStatus($faker->randomElement(['SENT', 'PAID', 'CANCELLED']))
-                            ->setCustomer($customer)
-                            ->setChrono($chrono);
+                        ->setSentAt($faker->dateTimeBetween('-6 months'))
+                        ->setStatus($faker->randomElement(['SENT', 'PAID', 'CANCELLED']))
+                        ->setCustomer($customer)
+                        ->setChrono($chrono);
 
                     $chrono++;
 
                     $manager->persist($invoice);
                 }
             }
-
         }
 
         $manager->flush();

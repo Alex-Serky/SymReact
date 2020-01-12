@@ -3,16 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Invoice;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class InvoiceIncrementationController
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var EntityManagerInterface */
     private $manager;
 
-    public function _construct(ObjectManager $manager)
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
     }
@@ -22,6 +20,7 @@ class InvoiceIncrementationController
         $data->setChrono($data->getChrono() + 1);
 
         $this->manager->flush();
+
         return $data;
     }
 }
