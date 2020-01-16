@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ApiResource(
  *      normalizationContext = {"groups" = "users_read"}
  * )
- * @UniqueEntity("email", message = "Un utilisateur ayant cet email existe déjà")
+ * @UniqueEntity("email", message = "Un utilisateur ayant cet adresse email existe déjà")
  */
 class User implements UserInterface
 {

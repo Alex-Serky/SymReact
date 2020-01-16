@@ -47,7 +47,6 @@ class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryIt
             &&
             $user instanceof User
         ) {
-
             $rootAlias = $queryBuilder->getRootAliases()[0];
 
             if ($resourceClass === Customer::class) {

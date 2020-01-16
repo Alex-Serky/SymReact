@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://putaindecode.io/articles/hateoas-le-graal-des-developpeurs-d-api/ -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>HATEOAS, le Graal des développeurs d'API | Putain de code</title>
+    <meta name="description" content="Blog participatif de la communauté dev">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:site_name" content="Putain de code !">
+    <meta name="twitter:site" content="@putaindecode">
+    <meta property="og:title" content="HATEOAS, le Graal des développeurs d&#39;API | Putain de code">
+    <meta name="twitter:title" content="HATEOAS, le Graal des développeurs d&#39;API | Putain de code">
+    <meta property="og:image" content="https://putaindecode.io/public/images/website/share.jpg">
+    <meta name="twitter:image" content="https://putaindecode.io/public/images/website/share.jpg">
+    <meta property="og:image:width" content="1500">
+    <meta property="og:image:height" content="777">
+    <link rel="alternate" type="application/rss+xml" href="https://putaindecode.io/feed.xml" title="RSS Feed">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://putaindecode.io/public/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://putaindecode.io/public/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://putaindecode.io/public/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://putaindecode.io/public/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://putaindecode.io/public/android-chrome-512x512.png">
+    <link rel="manifest" href="https://putaindecode.io/public/site.webmanifest">
+    <link rel="mask-icon" href="https://putaindecode.io/safari-pinned-tab.svg" color="#c7353a">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+  <style data-emotion-putaindecss="cv6q29 1bxgxyy vfl2jy 94ols9 ooam7r 1qdfdal">@-webkit-keyframes animation-cv6q29{0%{opacity:0;-webkit-transform:translateY(20px);-ms-transform:translateY(20px);transform:translateY(20px);}}@keyframes animation-cv6q29{0%{opacity:0;-webkit-transform:translateY(20px);-ms-transform:translateY(20px);transform:translateY(20px);}}body{padding:0px;margin:0px;background-color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;min-height:100vh;overflow-x:hidden;}@media (prefers-color-scheme:dark){body{background-color:#222;}}#root{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:stretch;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;}html{color:#46515B;font-size:1em;line-height:1.4;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;}@media (prefers-color-scheme:dark){html{color:#ddd;}}a{color:#CC0613;-webkit-text-decoration:underline;text-decoration:underline;}a:hover{-webkit-text-decoration:none;text-decoration:none;}*,*:before,*:after{box-sizing:border-box;}</style><style data-emotion-putaindecss="18k9t66">.putaindecss-18k9t66{background-color:#CC0613;background-image:linear-gradient(180deg,#E51D58 0%,#CC0613 100%);}</style><style data-emotion-putaindecss="qx7dny">.putaindecss-qx7dny{width:100%;max-width:1024px;margin:0 auto;padding:0 10px;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:stretch;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;}</style><style data-emotion-putaindecss="7s9om2">.putaindecss-7s9om2{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;padding:20px 0 50px;}</style><style data-emotion-putaindecss="gdpa5c">.putaindecss-gdpa5c{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-text-decoration:none;text-decoration:none;}</style><style data-emotion-putaindecss="1lm4738">.putaindecss-1lm4738{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-text-decoration:none;text-decoration:none;padding-bottom:10px;}</style><style data-emotion-putaindecss="13o7eu2">.putaindecss-13o7eu2{display:block;}</style><style data-emotion-putaindecss="4cf197">.putaindecss-4cf197{width:10px;height:10px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;}</style><style data-emotion-putaindecss="u5k24">.putaindecss-u5k24{font-size:22px;color:#fff;font-weight:800;}</style><style data-emotion-putaindecss="1nyebg4">.putaindecss-1nyebg4{font-size:14px;color:rgba(255,255,255,0.8);text-align:center;}</style><style data-emotion-putaindecss="kcj2v3">.putaindecss-kcj2v3{background-color:#F9F6F6;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;}@media (prefers-color-scheme:dark){.putaindecss-kcj2v3{background-color:#111;}}</style><style data-emotion-putaindecss="ees1g6">.putaindecss-ees1g6{-webkit-animation:animation-cv6q29 500ms ease-out 0ms 1 normal none running;animation:animation-cv6q29 500ms ease-out 0ms 1 normal none running;}</style><style data-emotion-putaindecss="1ktvb3t">.putaindecss-1ktvb3t{font-size:42px;font-weight:800;text-align:center;padding-top:40px;line-height:1.2;}</style><style data-emotion-putaindecss="4ach9y">.putaindecss-4ach9y{font-size:16px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;padding-top:10px;padding-bottom:40px;color:#46515B;-webkit-text-decoration:none;text-decoration:none;}@media (prefers-color-scheme:dark){.putaindecss-4ach9y{color:#ccc;}}</style><style data-emotion-putaindecss="uco8i7">.putaindecss-uco8i7{width:32px;height:32px;border-radius:100%;margin-right:10px;}</style><style data-emotion-putaindecss="bo7w1k">.putaindecss-bo7w1k{font-family:Georgia,serif;max-width:640px;width:100%;font-size:18px;margin:0 auto;line-height:1.7;}.putaindecss-bo7w1k h2,.putaindecss-bo7w1k h3,.putaindecss-bo7w1k h4,.putaindecss-bo7w1k h5,.putaindecss-bo7w1k h6{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;font-weight:800;line-height:1.2;}.putaindecss-bo7w1k img{max-width:100%;}.putaindecss-bo7w1k code{font-size:0.9em;font-family:PragmataPro,SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;line-height:1;background-color:#FAF3E1;margin:0 0.2em;}@media (prefers-color-scheme:dark){.putaindecss-bo7w1k code{background-color:#4F3804;}}.putaindecss-bo7w1k pre{padding:10px;overflow-x:auto;font-size:14px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);-webkit-overflow-scrolling:touch;}@media (prefers-color-scheme:dark){.putaindecss-bo7w1k pre{border:2px solid rgba(255,255,255,0.1);}}.putaindecss-bo7w1k pre code{font-size:14px;background-color:transparent;margin:0px;}.putaindecss-bo7w1k blockquote{padding-left:20px;margin:0px;font-size:16px;border-left:3px solid rgba(0,0,0,0.4);font-style:italic;}.putaindecss-bo7w1k p{text-align:justify;}.putaindecss-bo7w1k .hljs-keyword{color:#DA6BB5;}.putaindecss-bo7w1k .hljs-constructor{color:#DD792B;}.putaindecss-bo7w1k .hljs-identifier{color:#1E9EA7;}.putaindecss-bo7w1k .hljs-module-identifier{color:#C84682;}.putaindecss-bo7w1k .hljs-string{color:#3BA1C8;}.putaindecss-bo7w1k .hljs-comment{color:#aaa;}.putaindecss-bo7w1k .hljs-operator{color:#DA6BB5;}.putaindecss-bo7w1k .hljs-attribute{color:#4CB877;}.putaindecss-bo7w1k table{width:100%;text-align:center;}.putaindecss-bo7w1k figure{padding:20px 0;}.putaindecss-bo7w1k figcaption{text-align:center;}.putaindecss-bo7w1k a{word-wrap:break-word;}.putaindecss-bo7w1k table thead th{background-color:#E4EBEE;padding:10px 0;}</style><style data-emotion-putaindecss="1hbm7">.putaindecss-1hbm7{max-width:640px;width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;margin:20px auto;padding:20px;background-color:#fff;border-radius:10px;box-shadow:0 15px 15px -5px rgba(0,0,0,0.2);}@media (prefers-color-scheme:dark){.putaindecss-1hbm7{background-color:#222;}}@media (max-width:540px){.putaindecss-1hbm7{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}}</style><style data-emotion-putaindecss="ty7r4z">.putaindecss-ty7r4z{font-weight:800;}</style><style data-emotion-putaindecss="bb4ce3">.putaindecss-bb4ce3{width:0px;height:10px;-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;}</style><style data-emotion-putaindecss="1pkr03v">.putaindecss-1pkr03v{background-color:#00aced;color:#fff;padding:10px 20px;-webkit-text-decoration:none;text-decoration:none;border-radius:5px;font-weight:800;}.putaindecss-1pkr03v:active{opacity:0.5;}</style><style data-emotion-putaindecss="x4iqxe">.putaindecss-x4iqxe{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;text-align:center;padding:20px;}</style><style data-emotion-putaindecss="gein6x">.putaindecss-gein6x{font-size:20px;-webkit-text-decoration:none;text-decoration:none;color:#1E49B5;}</style><style data-emotion-putaindecss="8bodgl">.putaindecss-8bodgl{max-width:640px;width:100%;margin:0 auto;padding:20px 0;}</style><style data-emotion-putaindecss="5518eg">.putaindecss-5518eg{margin-top:20px;margin-bottom:20px;background-color:#E4EBEE;border-radius:10px;padding:20px;}@media (prefers-color-scheme:dark){.putaindecss-5518eg{background-color:#111;}}</style><style data-emotion-putaindecss="1gz1i1h">.putaindecss-1gz1i1h{font-size:32px;font-weight:800;margin-bottom:20px;text-align:center;}</style><style data-emotion-putaindecss="1wbispj">.putaindecss-1wbispj{font-size:18px;margin-bottom:10px;text-align:center;}</style><style data-emotion-putaindecss="1hyoz7m">.putaindecss-1hyoz7m{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}</style><style data-emotion-putaindecss="zs8kw7">.putaindecss-zs8kw7{background-color:#222;padding:20px 0;}</style><style data-emotion-putaindecss="79elbk">.putaindecss-79elbk{position:relative;}</style><style data-emotion-putaindecss="1vidl3i">.putaindecss-1vidl3i{position:absolute;left:0px;top:50%;color:#fff;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);-webkit-text-decoration:none;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><style data-emotion-putaindecss="lvyu5j">.putaindecss-lvyu5j{margin-right:10px;}</style><style data-emotion-putaindecss="um3i31">@media (max-width:400px){.putaindecss-um3i31{display:none;}}</style><style data-emotion-putaindecss="12cp4l7">.putaindecss-12cp4l7{color:rgba(255,255,255,0.5);text-align:center;font-size:14px;}</style><style data-emotion-putaindecss="1oq9kjo">.putaindecss-1oq9kjo{position:absolute;right:0px;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);color:#fff;-webkit-text-decoration:none;text-decoration:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><style data-emotion="putaindecss"></style><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.91c71242b4acaa0ee7f9db125ef21f90.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.b3d69807fc8989b3511a4e0bb0652899.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.b87d1e5d969b251bfca86778cc3ad1b7.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"></head>
+  <body>
+    <div id="root"><header class="putaindecss-18k9t66" style="background-image:linear-gradient(to bottom, hsl(289, 100%, 35%), hsl(289, 100%, 30%))"><div class="putaindecss-qx7dny"><div class="putaindecss-7s9om2"><a href="https://putaindecode.io/" class="putaindecss-gdpa5c"><div class="putaindecss-1lm4738"><svg class="putaindecss-13o7eu2" height="36px" width="36px" viewBox="0 0 36 36"><defs><lineargradient id="PutainDeCodeLogoGradient" x1="50%" x2="50%" y1="0%" y2="127.223881%"><stop offset="0%" stop-color="#E41D57"></stop><stop offset="100%" stop-color="#C60000"></stop></lineargradient></defs><circle cx="18" cy="18" fill="url(#PutainDeCodeLogoGradient)" r="17" stroke="#FFFFFF" stroke-width="2"></circle><polygon fill="#FFFFFF" points="15.9033203 18.2246094 15.9033203 18.3710938 11.2304688 20.5317383 11.2304688 22.8095703 18.0566406 19.184082 18.0566406 17.4116211 11.2304688 13.7788086 11.2304688 16.0639648"></polygon><rect height="14" width="2" fill="#FFFFFF" x="22" y="11"><animate attributeName="opacity" begin="100ms" calcMode="discrete" dur="2s" repeatCount="indefinite" values="1;0"></animate></rect></svg><div class="putaindecss-4cf197"></div><div aria-level="2" class="putaindecss-u5k24" role="heading">Putain de code !</div></div><div class="putaindecss-1nyebg4">Blog participatif de la communauté dev</div></a></div></div></header><div class="putaindecss-kcj2v3"><div class="putaindecss-ees1g6"><div class="putaindecss-qx7dny"><div aria-level="1" class="putaindecss-1ktvb3t" role="heading">HATEOAS, le Graal des développeurs d'API</div><a href="https://github.com/awillemant" class="putaindecss-4ach9y"><img class="putaindecss-uco8i7" alt="awillemant" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/awillemant"><div>awillemant<!-- --> <!-- -->•<!-- --> <time datetime="Thu Mar 12 2015 00:00:00 GMT+0000 (Coordinated Universal Time)">2015/03/12</time></div></a><div class="putaindecss-bo7w1k"><p>Nous vivons aujourd'hui dans un monde où tout devient service. Twitter,
+Facebook, Google Drive, GitHub, tout le monde y va de sa petite API pour que
+nous, geeks, puissions profiter pleinement des moult fonctionnalités offertes
+par ces plateformes. Qu'entend-on par service ? Comment les rendre disponibles
+facilement et intelligemment ? On va essayer d'y répondre !</p>
+<h2>Les webservices</h2>
+<p>Rappelons juste, pour mettre tout le monde d'accord, ce qui se passe pendant une
+simple navigation web.</p>
+<ol>
+<li>Tu tapes l'adresse de ton site préféré</li>
+<li>Le navigateur envoie la requête</li>
+<li>Le navigateur reçoit du code HTML et l'interprète, pour voir s'il faut
+charger d'autres choses</li>
+<li>Le navigateur relance les requêtes pour charger les images, scripts et CSS</li>
+<li>Le navigateur reçoit toutes les ressources et te les affiche dans sa
+fenêtre.</li>
+</ol>
+<p>On parle donc de contenu qu'il faut afficher pour les êtres humains, avec des
+images, des styles et des comportements qui facilitent l'ergonomie et te
+permettent de dire <em>"wouaouw, ce site est vraiment beau, cool et pratique !"</em></p>
+<p>Imaginons maintenant la même chose, mais à destination des programmes, qui ne
+consomment que de l'information brute et structurée, on ne va donc plus
+s'encombrer avec les CSS, les JS, et autres gifs animés (oui, les gifs animés,
+ça les fait pas marrer les machines...) ! On va se concentrer sur le contenu
+échangé et sur les moyens utilisés pour optimiser ces échanges.</p>
+<h3>La première école : SOAP</h3>
+<p>Imaginons deux programmes qui veulent discuter en passant par le web. Dans les
+années 90, des gens super brillants se sont dit : <em>"On va se baser sur le XML
+pour faire communiquer nos programmes sur le web"</em>. L'approche est assez logique
+et ingénieuse. Tout d'abord, les deux parties (le client et le serveur) se
+partagent une notice d'utilisation : la WSDL (Web Service Description Language),
+qui est un document XML décrivant toutes les méthodes qui peuvent être appelées
+par le client sur le serveur, avec les structures de données disponibles pour
+ces échanges. Le client prépare donc sa demande et l'enveloppe dans une grosse
+structure XML contenant toutes les métadonnées (méthode appelée, signature
+numérique, etc.). Une fois que le serveur a reçu cette demande, il la traite et
+répond aussi dans une grosse enveloppe XML.</p>
+<p>Tu viens de comprendre le SOAP (Service Oriented Application Protocol), aucun
+rapport avec une quelconque savonnette du coup. Cette méthode a fait ses preuves
+puisqu'elle fait tourner encore aujourd'hui des milliers de systèmes très
+complexes et très fiables.</p>
+<h3>La maison d'en face : REST</h3>
+<p>Plusieurs années ont passées et les esprits ont évolué. On a commencé à entendre
+des grandes déclarations comme : <em>"Le SOAP c'est vraiment lourdingue !"</em>, <em>"Le
+protocole HTTP est sous-exploité !"</em> ou encore <em>"Les enveloppes XML et les WSDL
+? Merci bien !"</em> et c'est à ce moment-là qu'on a donné un acronyme bidon pour
+décrire le protocole HTTP sans vraiment le nommer : REST (REpresentational State
+Transfert). Pour l'anecdote, tout le monde s'accorde à dire que cet acronyme ne
+veut rien dire ;)</p>
+<p>Le but du jeu est donc d'utiliser au maximum les possibilités du protocole HTTP,
+les verbes, les URL et les codes retours pour décrire des API de la manière la
+plus fidèle possible. On a donc gagné en simplicité et la communication entre
+machines se veut désormais à la portée de tous. Je reviendrai en détail sur le
+protocole HTTP un peu plus tard.</p>
+<h3>Un partout : balle au centre</h3>
+<p>Je tiens à remettre les choses au clair. On entend beaucoup trop souvent :
+<em>"Fais du REST, SOAP c'est nul"</em>. Il y a en effet clairement un effet de mode !
+Les API REST pullulent et sont vraiment très pratiques. Toutefois, dans les gros
+systèmes nécessitant du RPC ou encore de la signature numérique, pour les
+échanges de données médicales par exemple, le contrat WSDL et la rigueur du XML
+sont clairement des alliés !</p>
+<h2>Alors comme ça, HTTP ça fait tout ?</h2>
+<p>Il y a un type qui s'appelle Leonard Richardson et qui a mis en place un
+<a href="http://martinfowler.com/articles/richardsonMaturityModel.html">modèle de maturité</a>
+pour qualifier les API webservice.</p>
+<h3>Niveau 0</h3>
+<p>C'est le minimum acceptable dans la communication HTTP :</p>
+<ul>
+<li>Toutes les requêtes sont envoyées à la même URL, quelle que soit la demande.</li>
+<li>Toutes les requêtes sont envoyées avec le verbe POST.</li>
+<li>Quel que soit le type de retour (donnée ou erreur), le code HTTP retourné par
+le serveur sera toujours 200 (OK, tout s'est bien passé).</li>
+<li>Le contenu échangé est majoritairement du XML (pour les enveloppes notamment).</li>
+</ul>
+<p>Quand on fait du webservice avec SOAP, c'est ce niveau qui est utilisé lors de
+la communication HTTP.</p>
+<h3>Niveau 1</h3>
+<p>Avec ce premier niveau, on essaye d'enrichir un peu plus l'utilisation. On
+ajoute la notion de <em>ressource</em>, en fonction de la donnée métier manipulée,
+l'URL de la requête sera différente. La preuve par l'exemple :</p>
+<ul>
+<li><strong><em>POST /agenda</em></strong> : permet de travailler avec les données de l'agenda de
+l'application</li>
+<li><strong><em>POST /customers</em></strong> : permet de travailler avec le registre des clients</li>
+</ul>
+<p>On profite aussi de la vue hiérarchique que nous proposent les URL :</p>
+<ul>
+<li><strong><em>POST /customers/42</em></strong> : permet de travailler avec le client qui possède
+l'identifiant 42</li>
+</ul>
+<p>Rien qu'en traçant les URL appelées sur le serveur, on peut comprendre ce que le
+client HTTP cherche à faire... pas dégueu, non ?</p>
+<h3>Niveau 2</h3>
+<p>Le protocole HTTP utilise des verbes pour les requêtes et des codes numériques
+pour les retours. Ce sont ces deux mécanismes qui seront utilisés en complément
+du niveau 1.</p>
+<p>Les principaux verbes HTTP que l'on utilise sont GET, POST, PUT et DELETE. Leur
+nom est déjà très évocateur.</p>
+<ul>
+<li><strong><em>GET /customers/42</em></strong> pour récupérer les informations du client 42</li>
+<li><strong><em>PUT /customers</em></strong> <em>(+ corps de la requête)</em> pour enregistrer un nouveau
+client</li>
+<li><strong><em>POST /customers/42</em></strong> <em>(+ corps de la requête)</em> pour mettre à jour les
+informations du client 42</li>
+<li><strong><em>DELETE /customers/42</em></strong> pour supprimer le client 42</li>
+</ul>
+<p>Facile, non ? La réponse du serveur devient tout aussi logique grâce aux codes
+HTTP. Ces codes sont juste des nombres de 3 chiffres respectant cette logique :</p>
+<ul>
+<li><strong><em>1xx</em></strong> : <em>"Je suis en train de bosser, attends encore un peu."</em></li>
+<li><strong><em>2xx</em></strong> : <em>"Voilà le résultat, ça s'est bien passé."</em></li>
+<li><strong><em>3xx</em></strong> : <em>"Le contenu est déplacé, va voir ailleurs (cf. en-tête
+location)."</em></li>
+<li><strong><em>4xx</em></strong> : <em>"Tu me demandes n'importe quoi, tu as merdé."</em></li>
+<li><strong><em>5xx</em></strong> : <em>"J'ai merdé..."</em></li>
+</ul>
+<p>Parmi les plus connus, on a donc 404 (<em>"tu me demandes quelque chose qui
+n'existe pas"</em>), 403 (<em>"accès interdit"</em>), 304 (<em>"pas la peine de m'emmerder, la
+donnée est dans ton cache"</em>) et bien sûr 200 (<em>"OK, tout va bien"</em>).</p>
+<p>Et si les codes HTTP sont ta nouvelle passion, je te suggère de te documenter
+sur le code
+<a href="http://fr.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol">418</a> !</p>
+<h3>Niveau 3 : HATEOAS</h3>
+<p>Alors on a les verbes HTTP et les codes retours. À quoi peut ressembler le Graal
+des API REST alors ? Si on réfléchit un peu, on peut se dire qu'il faudrait,
+pour toutes les URL, donner un code retour HTTP cohérent pour chaque verbe,
+logique non ? De cette manière, on peut entamer un véritable dialogue avec le
+serveur HTTP, entièrement basé sur REST. Voilà une bonne nouvelle pour ceux qui
+veulent tailler une bavette ailleurs que sur Google Hangouts !</p>
+<p>Un petit exemple de dialogue :</p>
+<pre><code>&gt; GET /customers/42
+200 OK
+
+&gt; PUT /customers/42 {...}
+409 Conflict
+
+&gt; DELETE /customers/42
+204 No Content
+
+&gt; GET /customers/42
+404 Not Found
+</code></pre>
+<p>C'est un bon début, mais ce niveau 3 va quand même un peu plus loin ! N'as-tu
+jamais trouvé génial qu'avec de simples liens dans les pages web, tu pouvais
+naviguer des heures et des heures ?</p>
+<p>Pourquoi ne pas ajouter des liens dans les ressources retournées via REST ? Nous
+venons de mettre le doigt sur HATEOAS (<em>Hypermedia As The Engine Of Application
+State</em>). On peut désormais imaginer un tas de choses comme :</p>
+<ul>
+<li>Quand on renvoie un tableau json par exemple, dans chaque item,
+<ul>
+<li>on peut ajouter les liens qui permettent de le mettre à jour ;</li>
+<li>on peut ajouter les liens qui permettent de récupérer des données liées
+comme l'auteur d'un livre, les mentions d'un tweet, etc. ;</li>
+<li>on peut ajouter l'URL de putaindecode.io.</li>
+</ul></li>
+</ul>
+<p>Voici un exemple de trame JSON avec les informations HATEOAS. Pour information,
+il s'agit d'un webservice qui permet de lister des conférences.</p>
+<pre><code>[
+  {
+    "conference": {
+      "id": 1,
+      "links": [
+        {
+          "rel": "list",
+          "href": "http://localhost:8080/hateoas-webservice/rs/conferences/"
+        },
+        {
+          "rel": "self",
+          "href": "http://localhost:8080/hateoas-webservice/rs/conferences/1"
+        }
+      ],
+      "name": "Take Off Conf 2013",
+      "startDate": "2013-01-17T00:00:00+01:00",
+      "endDate": "2013-01-18T00:00:00+01:00",
+      "talks": [
+        {
+          "id": 1,
+          "speakerName": "Jakob Mattsson",
+          "title": "You are not service oriented enough!",
+          "links": [
+            {
+              "rel": "self",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/1"
+            },
+            {
+              "rel": "list",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "speakerName": "Olivier Lacan",
+          "title": "Science-based development",
+          "links": [
+            {
+              "rel": "self",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/2"
+            },
+            {
+              "rel": "list",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "speakerName": "Xavier Coulon",
+          "title": "Build your website with awestruct and publish...",
+          "links": [
+            {
+              "rel": "self",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/3"
+            },
+            {
+              "rel": "list",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "speakerName": "Rémi Parmentier",
+          "title": "Design for developers",
+          "links": [
+            {
+              "rel": "self",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/4"
+            },
+            {
+              "rel": "list",
+              "href": "http://localhost:8080/hateoas-webservice/rs/talks/"
+            }
+          ]
+        }
+      ]
+    }
+  },{
+  ...
+  }
+]
+</code></pre>
+<p>Dans cette trame, tu auras remarqué les objets dans les tableaux nommés "links",
+ce sont les liens disponibles pour chacun des objets renvoyés ! On peut imaginer
+qu'en fonction des droits de l'utilisateur courant, il y ait plus ou moins de
+liens.</p>
+<h2>Est-ce que c'est standard ?</h2>
+<p>Eh bien non ! Il n'y a pas vraiment de convention pour l'écriture des liens dans
+les trames renvoyées. Cela dépend du format renvoyé dans un premier temps.
+Comment formaliser un standard si on renvoie en JSON, XML et YML en fonction des
+en-têtes HTTP du client ?</p>
+<p>De la même manière, tu auras remarqué que l'on ne précise pas le verbe HTTP à
+utiliser sur les URL. C'est la raison pour laquelle il faut implémenter un
+retour cohérent pour tous les verbes HTTP courants !</p>
+<p>Et pour finir, comment connaître le format du document JSON accepté avec les
+requêtes POST par exemple ? Il n'y a pas non plus de règle ! On pourrait
+imaginer par exemple un document "type" qui serait renvoyé après une requête
+"OPTION" sur l'URL.</p>
+<p>Il y a toutefois quelques expérimentations comme
+<a href="http://en.wikipedia.org/wiki/Hypertext_Application_Language">HAL</a> ou encore
+<a href="http://jsonapi.org/">JSON API</a> qui tentent de normaliser un peu ce flou
+artistique.</p>
+<p>Tu fais ta petite popote ! Tu fais comme tu veux ! Ça a du bon aussi !</p>
+<h2>"Bon ok, je fais comment pour le mettre en place maintenant ?"</h2>
+<p>Tu remontes tes manches et tu te démerdes !</p>
+<p>Il y a quelques frameworks qui vont te donner un coup de main. Dans le monde
+Java par exemple, il existe
+<a href="http://docs.jboss.org/resteasy/docs/2.0.0.GA/userguide/html/LinkHeader.html">Resteasy-links</a>
+(avec un exemple d'utilisation
+<a href="https://github.com/awillemant/hateoas-example">sur mon repo GitHub</a>), ou encore
+<a href="http://projects.spring.io/spring-hateoas/">Spring HATEOAS</a></p>
+<p>Pour les <em>Nodistes</em>, une simple recherche sur
+<a href="https://www.npmjs.com/search?q=hateoas">npmjs</a> renverra un tas d'outils !</p>
+<h2>Références</h2>
+<p>Oui, parce qu'il y a des gens bien plus brillants que moi pour vous convaincre
+sur l'Hypermedia !</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/HATEOAS">Wikipédia</a></li>
+<li><a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Blog de Martin Fowler</a></li>
+<li>Les travaux de Steve Klabnik, Rubyiste reconnu (ex :
+<a href="https://www.youtube.com/watch?v=g4sqydY3hHU">Designing Hypermedia APIs</a>)</li>
+<li>Ori Pekelman :
+<a href="https://www.youtube.com/watch?v=ZZxOaCP8vyg">son talk à la Take Off Conf 2014</a></li>
+<li><a href="http://blog.xebia.fr/2014/03/17/post-vs-put-la-confusion/">Un excellent article de Xebia sur la bonne utilisation de POST et PUT</a></li>
+</ul>
+</div><div class="putaindecss-1hbm7"><div class="putaindecss-ty7r4z">Vous avez aimé cet article?</div><div class="putaindecss-bb4ce3"></div><a class="putaindecss-1pkr03v" href="https://www.twitter.com/intent/tweet?text=HATEOAS%2C%20le%20Graal%20des%20d%C3%A9veloppeurs%20d%27API%20sur%20%40PutainDeCode%20https%3A%2F%2Fputaindecode.io%2Farticles%2Fhateoas-le-graal-des-developpeurs-d-api" target="_blank">Le partager sur Twitter</a></div><div class="putaindecss-x4iqxe"><a href="https://putaindecode.io/articles" class="putaindecss-gein6x">← Articles</a></div><div class="putaindecss-8bodgl" id="disqus_thread"><iframe id="dsq-app5795" name="dsq-app5795" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 2183px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div></div></div></div><div class="putaindecss-qx7dny"><div class="putaindecss-5518eg"><div aria-level="2" class="putaindecss-1gz1i1h" role="heading">Ne rien rater</div><div aria-level="3" class="putaindecss-1wbispj" role="heading">Sur les réseaux</div><div class="putaindecss-1hyoz7m"><a href="https://twitter.com/PutainDeCode"><img alt="Twitter" height="48" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/twitter.svg" width="48"></a><div class="putaindecss-4cf197"></div><a href="https://facebook.com/putaindecode"><img alt="Facebook" height="48" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/facebook.svg" width="48"></a><div class="putaindecss-4cf197"></div><a href="https://github.com/putaindecode"><img alt="Facebook" height="48" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/github.svg" width="48"></a><div class="putaindecss-4cf197"></div><a href="https://itunes.apple.com/fr/podcast/putain-de-code-!/id1185311825"><img alt="Apple Podcast" height="48" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/apple-podcast.svg" width="48"></a><div class="putaindecss-4cf197"></div><a href="https://soundcloud.com/putaindecode"><img alt="Soundcloud" height="48" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/soundcloud.svg" width="48"></a></div><div aria-level="3" class="putaindecss-1wbispj" role="heading">Sur le chat</div><div class="putaindecss-1hyoz7m"><a href="https://discord.gg/jtbGNNc"><img alt="Discord" height="48" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/discord.svg" width="48"></a></div></div></div><footer class="putaindecss-zs8kw7"><div class="putaindecss-qx7dny"><div class="putaindecss-79elbk"><a class="putaindecss-1vidl3i" href="https://putaindecode.io/feed.xml"><img class="putaindecss-lvyu5j" alt="Flux RSS" height="16" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/rss-feed.svg" width="16"><div class="putaindecss-um3i31">Flux RSS</div></a><div class="putaindecss-12cp4l7">© 2019 Putain de code !</div><a class="putaindecss-1oq9kjo" href="https://github.com/putaindecode/putaindecode.io">GitHub</a></div></div></footer></div><script src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/embed.js" data-timestamp="1579023874579" defer="defer"></script><script id="data">window.initialData = [{"key":"hateoas-le-graal-des-developpeurs-d-api","value":[[["HATEOAS, le Graal des développeurs d'API","2015-03-12T00:00:00.000Z","\u003cp>Nous vivons aujourd'hui dans un monde où tout devient service. Twitter,\nFacebook, Google Drive, GitHub, tout le monde y va de sa petite API pour que\nnous, geeks, puissions profiter pleinement des moult fonctionnalités offertes\npar ces plateformes. Qu'entend-on par service ? Comment les rendre disponibles\nfacilement et intelligemment ? On va essayer d'y répondre !\u003c/p>\n\u003ch2>Les webservices\u003c/h2>\n\u003cp>Rappelons juste, pour mettre tout le monde d'accord, ce qui se passe pendant une\nsimple navigation web.\u003c/p>\n\u003col>\n\u003cli>Tu tapes l'adresse de ton site préféré\u003c/li>\n\u003cli>Le navigateur envoie la requête\u003c/li>\n\u003cli>Le navigateur reçoit du code HTML et l'interprète, pour voir s'il faut\ncharger d'autres choses\u003c/li>\n\u003cli>Le navigateur relance les requêtes pour charger les images, scripts et CSS\u003c/li>\n\u003cli>Le navigateur reçoit toutes les ressources et te les affiche dans sa\nfenêtre.\u003c/li>\n\u003c/ol>\n\u003cp>On parle donc de contenu qu'il faut afficher pour les êtres humains, avec des\nimages, des styles et des comportements qui facilitent l'ergonomie et te\npermettent de dire \u003cem>&quot;wouaouw, ce site est vraiment beau, cool et pratique !&quot;\u003c/em>\u003c/p>\n\u003cp>Imaginons maintenant la même chose, mais à destination des programmes, qui ne\nconsomment que de l'information brute et structurée, on ne va donc plus\ns'encombrer avec les CSS, les JS, et autres gifs animés (oui, les gifs animés,\nça les fait pas marrer les machines...) ! On va se concentrer sur le contenu\néchangé et sur les moyens utilisés pour optimiser ces échanges.\u003c/p>\n\u003ch3>La première école : SOAP\u003c/h3>\n\u003cp>Imaginons deux programmes qui veulent discuter en passant par le web. Dans les\nannées 90, des gens super brillants se sont dit : \u003cem>&quot;On va se baser sur le XML\npour faire communiquer nos programmes sur le web&quot;\u003c/em>. L'approche est assez logique\net ingénieuse. Tout d'abord, les deux parties (le client et le serveur) se\npartagent une notice d'utilisation : la WSDL (Web Service Description Language),\nqui est un document XML décrivant toutes les méthodes qui peuvent être appelées\npar le client sur le serveur, avec les structures de données disponibles pour\nces échanges. Le client prépare donc sa demande et l'enveloppe dans une grosse\nstructure XML contenant toutes les métadonnées (méthode appelée, signature\nnumérique, etc.). Une fois que le serveur a reçu cette demande, il la traite et\nrépond aussi dans une grosse enveloppe XML.\u003c/p>\n\u003cp>Tu viens de comprendre le SOAP (Service Oriented Application Protocol), aucun\nrapport avec une quelconque savonnette du coup. Cette méthode a fait ses preuves\npuisqu'elle fait tourner encore aujourd'hui des milliers de systèmes très\ncomplexes et très fiables.\u003c/p>\n\u003ch3>La maison d'en face : REST\u003c/h3>\n\u003cp>Plusieurs années ont passées et les esprits ont évolué. On a commencé à entendre\ndes grandes déclarations comme : \u003cem>&quot;Le SOAP c'est vraiment lourdingue !&quot;\u003c/em>, \u003cem>&quot;Le\nprotocole HTTP est sous-exploité !&quot;\u003c/em> ou encore \u003cem>&quot;Les enveloppes XML et les WSDL\n? Merci bien !&quot;\u003c/em> et c'est à ce moment-là qu'on a donné un acronyme bidon pour\ndécrire le protocole HTTP sans vraiment le nommer : REST (REpresentational State\nTransfert). Pour l'anecdote, tout le monde s'accorde à dire que cet acronyme ne\nveut rien dire ;)\u003c/p>\n\u003cp>Le but du jeu est donc d'utiliser au maximum les possibilités du protocole HTTP,\nles verbes, les URL et les codes retours pour décrire des API de la manière la\nplus fidèle possible. On a donc gagné en simplicité et la communication entre\nmachines se veut désormais à la portée de tous. Je reviendrai en détail sur le\nprotocole HTTP un peu plus tard.\u003c/p>\n\u003ch3>Un partout : balle au centre\u003c/h3>\n\u003cp>Je tiens à remettre les choses au clair. On entend beaucoup trop souvent :\n\u003cem>&quot;Fais du REST, SOAP c'est nul&quot;\u003c/em>. Il y a en effet clairement un effet de mode !\nLes API REST pullulent et sont vraiment très pratiques. Toutefois, dans les gros\nsystèmes nécessitant du RPC ou encore de la signature numérique, pour les\néchanges de données médicales par exemple, le contrat WSDL et la rigueur du XML\nsont clairement des alliés !\u003c/p>\n\u003ch2>Alors comme ça, HTTP ça fait tout ?\u003c/h2>\n\u003cp>Il y a un type qui s'appelle Leonard Richardson et qui a mis en place un\n\u003ca href=\"http://martinfowler.com/articles/richardsonMaturityModel.html\">modèle de maturité\u003c/a>\npour qualifier les API webservice.\u003c/p>\n\u003ch3>Niveau 0\u003c/h3>\n\u003cp>C'est le minimum acceptable dans la communication HTTP :\u003c/p>\n\u003cul>\n\u003cli>Toutes les requêtes sont envoyées à la même URL, quelle que soit la demande.\u003c/li>\n\u003cli>Toutes les requêtes sont envoyées avec le verbe POST.\u003c/li>\n\u003cli>Quel que soit le type de retour (donnée ou erreur), le code HTTP retourné par\nle serveur sera toujours 200 (OK, tout s'est bien passé).\u003c/li>\n\u003cli>Le contenu échangé est majoritairement du XML (pour les enveloppes notamment).\u003c/li>\n\u003c/ul>\n\u003cp>Quand on fait du webservice avec SOAP, c'est ce niveau qui est utilisé lors de\nla communication HTTP.\u003c/p>\n\u003ch3>Niveau 1\u003c/h3>\n\u003cp>Avec ce premier niveau, on essaye d'enrichir un peu plus l'utilisation. On\najoute la notion de \u003cem>ressource\u003c/em>, en fonction de la donnée métier manipulée,\nl'URL de la requête sera différente. La preuve par l'exemple :\u003c/p>\n\u003cul>\n\u003cli>\u003cstrong>\u003cem>POST /agenda\u003c/em>\u003c/strong> : permet de travailler avec les données de l'agenda de\nl'application\u003c/li>\n\u003cli>\u003cstrong>\u003cem>POST /customers\u003c/em>\u003c/strong> : permet de travailler avec le registre des clients\u003c/li>\n\u003c/ul>\n\u003cp>On profite aussi de la vue hiérarchique que nous proposent les URL :\u003c/p>\n\u003cul>\n\u003cli>\u003cstrong>\u003cem>POST /customers/42\u003c/em>\u003c/strong> : permet de travailler avec le client qui possède\nl'identifiant 42\u003c/li>\n\u003c/ul>\n\u003cp>Rien qu'en traçant les URL appelées sur le serveur, on peut comprendre ce que le\nclient HTTP cherche à faire... pas dégueu, non ?\u003c/p>\n\u003ch3>Niveau 2\u003c/h3>\n\u003cp>Le protocole HTTP utilise des verbes pour les requêtes et des codes numériques\npour les retours. Ce sont ces deux mécanismes qui seront utilisés en complément\ndu niveau 1.\u003c/p>\n\u003cp>Les principaux verbes HTTP que l'on utilise sont GET, POST, PUT et DELETE. Leur\nnom est déjà très évocateur.\u003c/p>\n\u003cul>\n\u003cli>\u003cstrong>\u003cem>GET /customers/42\u003c/em>\u003c/strong> pour récupérer les informations du client 42\u003c/li>\n\u003cli>\u003cstrong>\u003cem>PUT /customers\u003c/em>\u003c/strong> \u003cem>(+ corps de la requête)\u003c/em> pour enregistrer un nouveau\nclient\u003c/li>\n\u003cli>\u003cstrong>\u003cem>POST /customers/42\u003c/em>\u003c/strong> \u003cem>(+ corps de la requête)\u003c/em> pour mettre à jour les\ninformations du client 42\u003c/li>\n\u003cli>\u003cstrong>\u003cem>DELETE /customers/42\u003c/em>\u003c/strong> pour supprimer le client 42\u003c/li>\n\u003c/ul>\n\u003cp>Facile, non ? La réponse du serveur devient tout aussi logique grâce aux codes\nHTTP. Ces codes sont juste des nombres de 3 chiffres respectant cette logique :\u003c/p>\n\u003cul>\n\u003cli>\u003cstrong>\u003cem>1xx\u003c/em>\u003c/strong> : \u003cem>&quot;Je suis en train de bosser, attends encore un peu.&quot;\u003c/em>\u003c/li>\n\u003cli>\u003cstrong>\u003cem>2xx\u003c/em>\u003c/strong> : \u003cem>&quot;Voilà le résultat, ça s'est bien passé.&quot;\u003c/em>\u003c/li>\n\u003cli>\u003cstrong>\u003cem>3xx\u003c/em>\u003c/strong> : \u003cem>&quot;Le contenu est déplacé, va voir ailleurs (cf. en-tête\nlocation).&quot;\u003c/em>\u003c/li>\n\u003cli>\u003cstrong>\u003cem>4xx\u003c/em>\u003c/strong> : \u003cem>&quot;Tu me demandes n'importe quoi, tu as merdé.&quot;\u003c/em>\u003c/li>\n\u003cli>\u003cstrong>\u003cem>5xx\u003c/em>\u003c/strong> : \u003cem>&quot;J'ai merdé...&quot;\u003c/em>\u003c/li>\n\u003c/ul>\n\u003cp>Parmi les plus connus, on a donc 404 (\u003cem>&quot;tu me demandes quelque chose qui\nn'existe pas&quot;\u003c/em>), 403 (\u003cem>&quot;accès interdit&quot;\u003c/em>), 304 (\u003cem>&quot;pas la peine de m'emmerder, la\ndonnée est dans ton cache&quot;\u003c/em>) et bien sûr 200 (\u003cem>&quot;OK, tout va bien&quot;\u003c/em>).\u003c/p>\n\u003cp>Et si les codes HTTP sont ta nouvelle passion, je te suggère de te documenter\nsur le code\n\u003ca href=\"http://fr.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol\">418\u003c/a> !\u003c/p>\n\u003ch3>Niveau 3 : HATEOAS\u003c/h3>\n\u003cp>Alors on a les verbes HTTP et les codes retours. À quoi peut ressembler le Graal\ndes API REST alors ? Si on réfléchit un peu, on peut se dire qu'il faudrait,\npour toutes les URL, donner un code retour HTTP cohérent pour chaque verbe,\nlogique non ? De cette manière, on peut entamer un véritable dialogue avec le\nserveur HTTP, entièrement basé sur REST. Voilà une bonne nouvelle pour ceux qui\nveulent tailler une bavette ailleurs que sur Google Hangouts !\u003c/p>\n\u003cp>Un petit exemple de dialogue :\u003c/p>\n\u003cpre>\u003ccode>&gt; GET /customers/42\n200 OK\n\n&gt; PUT /customers/42 {...}\n409 Conflict\n\n&gt; DELETE /customers/42\n204 No Content\n\n&gt; GET /customers/42\n404 Not Found\n\u003c/code>\u003c/pre>\n\u003cp>C'est un bon début, mais ce niveau 3 va quand même un peu plus loin ! N'as-tu\njamais trouvé génial qu'avec de simples liens dans les pages web, tu pouvais\nnaviguer des heures et des heures ?\u003c/p>\n\u003cp>Pourquoi ne pas ajouter des liens dans les ressources retournées via REST ? Nous\nvenons de mettre le doigt sur HATEOAS (\u003cem>Hypermedia As The Engine Of Application\nState\u003c/em>). On peut désormais imaginer un tas de choses comme :\u003c/p>\n\u003cul>\n\u003cli>Quand on renvoie un tableau json par exemple, dans chaque item,\n\u003cul>\n\u003cli>on peut ajouter les liens qui permettent de le mettre à jour ;\u003c/li>\n\u003cli>on peut ajouter les liens qui permettent de récupérer des données liées\ncomme l'auteur d'un livre, les mentions d'un tweet, etc. ;\u003c/li>\n\u003cli>on peut ajouter l'URL de putaindecode.io.\u003c/li>\n\u003c/ul>\u003c/li>\n\u003c/ul>\n\u003cp>Voici un exemple de trame JSON avec les informations HATEOAS. Pour information,\nil s'agit d'un webservice qui permet de lister des conférences.\u003c/p>\n\u003cpre>\u003ccode>[\n  {\n    &quot;conference&quot;: {\n      &quot;id&quot;: 1,\n      &quot;links&quot;: [\n        {\n          &quot;rel&quot;: &quot;list&quot;,\n          &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/conferences/&quot;\n        },\n        {\n          &quot;rel&quot;: &quot;self&quot;,\n          &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/conferences/1&quot;\n        }\n      ],\n      &quot;name&quot;: &quot;Take Off Conf 2013&quot;,\n      &quot;startDate&quot;: &quot;2013-01-17T00:00:00+01:00&quot;,\n      &quot;endDate&quot;: &quot;2013-01-18T00:00:00+01:00&quot;,\n      &quot;talks&quot;: [\n        {\n          &quot;id&quot;: 1,\n          &quot;speakerName&quot;: &quot;Jakob Mattsson&quot;,\n          &quot;title&quot;: &quot;You are not service oriented enough!&quot;,\n          &quot;links&quot;: [\n            {\n              &quot;rel&quot;: &quot;self&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/1&quot;\n            },\n            {\n              &quot;rel&quot;: &quot;list&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/&quot;\n            }\n          ]\n        },\n        {\n          &quot;id&quot;: 2,\n          &quot;speakerName&quot;: &quot;Olivier Lacan&quot;,\n          &quot;title&quot;: &quot;Science-based development&quot;,\n          &quot;links&quot;: [\n            {\n              &quot;rel&quot;: &quot;self&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/2&quot;\n            },\n            {\n              &quot;rel&quot;: &quot;list&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/&quot;\n            }\n          ]\n        },\n        {\n          &quot;id&quot;: 3,\n          &quot;speakerName&quot;: &quot;Xavier Coulon&quot;,\n          &quot;title&quot;: &quot;Build your website with awestruct and publish...&quot;,\n          &quot;links&quot;: [\n            {\n              &quot;rel&quot;: &quot;self&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/3&quot;\n            },\n            {\n              &quot;rel&quot;: &quot;list&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/&quot;\n            }\n          ]\n        },\n        {\n          &quot;id&quot;: 4,\n          &quot;speakerName&quot;: &quot;Rémi Parmentier&quot;,\n          &quot;title&quot;: &quot;Design for developers&quot;,\n          &quot;links&quot;: [\n            {\n              &quot;rel&quot;: &quot;self&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/4&quot;\n            },\n            {\n              &quot;rel&quot;: &quot;list&quot;,\n              &quot;href&quot;: &quot;http://localhost:8080/hateoas-webservice/rs/talks/&quot;\n            }\n          ]\n        }\n      ]\n    }\n  },{\n  ...\n  }\n]\n\u003c/code>\u003c/pre>\n\u003cp>Dans cette trame, tu auras remarqué les objets dans les tableaux nommés &quot;links&quot;,\nce sont les liens disponibles pour chacun des objets renvoyés ! On peut imaginer\nqu'en fonction des droits de l'utilisateur courant, il y ait plus ou moins de\nliens.\u003c/p>\n\u003ch2>Est-ce que c'est standard ?\u003c/h2>\n\u003cp>Eh bien non ! Il n'y a pas vraiment de convention pour l'écriture des liens dans\nles trames renvoyées. Cela dépend du format renvoyé dans un premier temps.\nComment formaliser un standard si on renvoie en JSON, XML et YML en fonction des\nen-têtes HTTP du client ?\u003c/p>\n\u003cp>De la même manière, tu auras remarqué que l'on ne précise pas le verbe HTTP à\nutiliser sur les URL. C'est la raison pour laquelle il faut implémenter un\nretour cohérent pour tous les verbes HTTP courants !\u003c/p>\n\u003cp>Et pour finir, comment connaître le format du document JSON accepté avec les\nrequêtes POST par exemple ? Il n'y a pas non plus de règle ! On pourrait\nimaginer par exemple un document &quot;type&quot; qui serait renvoyé après une requête\n&quot;OPTION&quot; sur l'URL.\u003c/p>\n\u003cp>Il y a toutefois quelques expérimentations comme\n\u003ca href=\"http://en.wikipedia.org/wiki/Hypertext_Application_Language\">HAL\u003c/a> ou encore\n\u003ca href=\"http://jsonapi.org/\">JSON API\u003c/a> qui tentent de normaliser un peu ce flou\nartistique.\u003c/p>\n\u003cp>Tu fais ta petite popote ! Tu fais comme tu veux ! Ça a du bon aussi !\u003c/p>\n\u003ch2>&quot;Bon ok, je fais comment pour le mettre en place maintenant ?&quot;\u003c/h2>\n\u003cp>Tu remontes tes manches et tu te démerdes !\u003c/p>\n\u003cp>Il y a quelques frameworks qui vont te donner un coup de main. Dans le monde\nJava par exemple, il existe\n\u003ca href=\"http://docs.jboss.org/resteasy/docs/2.0.0.GA/userguide/html/LinkHeader.html\">Resteasy-links\u003c/a>\n(avec un exemple d'utilisation\n\u003ca href=\"https://github.com/awillemant/hateoas-example\">sur mon repo GitHub\u003c/a>), ou encore\n\u003ca href=\"http://projects.spring.io/spring-hateoas/\">Spring HATEOAS\u003c/a>\u003c/p>\n\u003cp>Pour les \u003cem>Nodistes\u003c/em>, une simple recherche sur\n\u003ca href=\"https://www.npmjs.com/search?q=hateoas\">npmjs\u003c/a> renverra un tas d'outils !\u003c/p>\n\u003ch2>Références\u003c/h2>\n\u003cp>Oui, parce qu'il y a des gens bien plus brillants que moi pour vous convaincre\nsur l'Hypermedia !\u003c/p>\n\u003cul>\n\u003cli>\u003ca href=\"http://en.wikipedia.org/wiki/HATEOAS\">Wikipédia\u003c/a>\u003c/li>\n\u003cli>\u003ca href=\"http://martinfowler.com/articles/richardsonMaturityModel.html\">Blog de Martin Fowler\u003c/a>\u003c/li>\n\u003cli>Les travaux de Steve Klabnik, Rubyiste reconnu (ex :\n\u003ca href=\"https://www.youtube.com/watch?v=g4sqydY3hHU\">Designing Hypermedia APIs\u003c/a>)\u003c/li>\n\u003cli>Ori Pekelman :\n\u003ca href=\"https://www.youtube.com/watch?v=ZZxOaCP8vyg\">son talk à la Take Off Conf 2014\u003c/a>\u003c/li>\n\u003cli>\u003ca href=\"http://blog.xebia.fr/2014/03/17/post-vs-put-la-confusion/\">Un excellent article de Xebia sur la bonne utilisation de POST et PUT\u003c/a>\u003c/li>\n\u003c/ul>\n","hateoas-le-graal-des-developpeurs-d-api","api/hateoas","awillemant"]]],"height":1,"left":null,"right":null},0,null,0,0]</script>
+    <script>
+      window.ga =
+        window.ga ||
+        function() {
+          (ga.q = ga.q || []).push(arguments);
+        };
+      ga.l = +new Date();
+      ga("create", "UA-43771806-1", "auto");
+      ga("send", "pageview");
+    </script>
+    <script async="" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/analytics.js"></script>
+  <script type="text/javascript" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/1837e6ec5fc1e3facce0.js" defer=""></script>
+
+<iframe style="display: none;" src="./HATEOAS, le Graal des développeurs d&#39;API _ Putain de code_files/saved_resource(1).html"></iframe></body></html>
